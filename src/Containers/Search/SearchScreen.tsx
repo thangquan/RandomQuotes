@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { View } from 'react-native'
 import { Text, TextInput, Icon, List, Avatar } from 'react-native-paper'
 import { MyTabs } from './Components/SearchTabs'
@@ -10,6 +10,7 @@ const useSearchScreen = () => {
 }
 export const SearchScreen = () => {
   const { onChangedSearchText } = useSearchScreen()
+  const [term,setTerm] = useState('');
   return (
     <>
       <View
@@ -60,6 +61,7 @@ export const SearchScreen = () => {
                 roundness: 40,
               }}
               placeholder={'Search'}
+              onChangeText={(val)=>{setTerm(val)}}
               inputMode='text'
               mode='outlined'
               left={<TextInput.Icon icon={'magnify'} color='black' />}
@@ -69,7 +71,7 @@ export const SearchScreen = () => {
         </View>
 
         {/* Authors and Tags */}
-        <MyTabs />
+        <MyTabs Term={term}/>
       </View>
     </>
   )

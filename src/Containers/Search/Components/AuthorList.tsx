@@ -1,16 +1,21 @@
 import LoadingView from '@/Components/LoadingView'
 import { useListAuthors } from '@/Hooks/useListAuthors'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { ScrollView, View } from 'react-native'
 import { Avatar, List, Text } from 'react-native-paper'
 
-export const AuthorList = () => {
+export const AuthorList = (props) => {
   const { data: authors, isFetching } = useListAuthors()
+  
+  const filteredData = authors.filter((author)=>{
+    return author.name.includes(props.Term);
+  })
+
   const getProfileImageURL = useCallback((authorSlug: string, size = 200) => {
     const IMAGE_BASE = 'https://images.quotable.dev/profile'
     return `${IMAGE_BASE}/${size}/${authorSlug}.jpg`
   }, [])
-
+ 
   return (
     <View
       style={{
@@ -26,7 +31,7 @@ export const AuthorList = () => {
       ) : (
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{}}>
-            {authors.map((author: any, index: any) => (
+            {filteredData.map((author: any, index: any) => (
               <List.Accordion
                 key={index}
                 title={author.name}

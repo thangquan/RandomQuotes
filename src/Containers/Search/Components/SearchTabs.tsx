@@ -6,7 +6,10 @@ import { TagsList } from './TagsList'
 
 const Tab = createMaterialTopTabNavigator()
 
-export const MyTabs = () => {
+export const MyTabs = (props) => {
+
+  const term = props.Term;
+  
   return (
     <Tab.Navigator
       screenOptions={{
@@ -21,8 +24,12 @@ export const MyTabs = () => {
         },
         tabBarItemStyle: {},
       }}
+      
     >
-      <Tab.Screen name='Authors' component={AuthorList} options={{}} />
+      <Tab.Screen name='Authors' options={{}}>
+      {(props)=><AuthorList {...props} Term={term}/>}
+      </Tab.Screen>
+      
       <Tab.Screen name='Tags' component={TagsList} />
     </Tab.Navigator>
   )
